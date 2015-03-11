@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical" >
+	<!-- 放置已选择的文字的文字框 -->
+    <LinearLayout
+        android:id="@+id/word_select_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >"
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_line" />
+    <!-- 此处是我们自定义的GridView，要放置全包名，不能写错！-->
+	<!-- com.imooc.guessmusic.myui.MyGridView -->
+    <com.imooc.guessmusic.myui.MyGridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="8"
+        android:orientation="vertical"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:verticalSpacing="2dp" >
+    </com.imooc.guessmusic.myui.MyGridView>
+
+</LinearLayout>
