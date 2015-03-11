@@ -32,7 +32,15 @@ public class MainActivity extends Activity implements IWordButtonClickListener {
 	
 	// 设置常量
 	private static final String TAG = "MainActivity";
+
+	/** 答案的状态 —— 正确 */
+	public final static int STATUS_ANSWER_RIGHT = 1;
 	
+	/** 答案的状态 —— 错误 */
+	public final static int STATUS_ANSWER_WRONG = 2;
+	
+	/** 答案的状态 —— 不完整 */
+	public final static int STATUS_ANSWER_LACK = 3;
 	// 唱片相关的动画
 	private Animation mPanAnim;
 	private LinearInterpolator mPanLin;			//线性的速度
@@ -187,6 +195,26 @@ public class MainActivity extends Activity implements IWordButtonClickListener {
 		// TODO Auto-generated method stub
 //		Toast.makeText(MainActivity.this, wordButton.mIndex, Toast.LENGTH_SHORT).show();
 		setSelectWord(wordButton);
+		
+		// 获得答案状态
+		int checkResult = checkTheAnswer();
+		
+		// 检查答案
+		if (checkResult == STATUS_ANSWER_RIGHT) {
+			// 答案正确，过关并获得相应的奖励
+			Toast.makeText(this, "STATUS_ANSWER_RIGHT", Toast.LENGTH_SHORT).show();
+//			handlePassEvent();
+		} else if(checkResult == STATUS_ANSWER_WRONG) {
+			// 答案错误，提示：闪烁文字并提示用户
+//			sparkTheWords();
+		} else if(checkResult == STATUS_ANSWER_LACK) {
+			// 答案正确，过关并获得相应的奖励
+			// 在文字缺失的状况下，设置文字的默认颜色为白色
+//			for (int i = 0; i < mBtnSelectWords.size(); i++) {
+//				mBtnSelectWords.get(i).mViewButton.setTextColor(Color.WHITE);
+//			}
+			
+		}
 	}
 	
 	//清除答案的方法
@@ -396,5 +424,26 @@ public class MainActivity extends Activity implements IWordButtonClickListener {
 		}
 		
 		return str.charAt(0);
+	}
+	
+	/**
+	 * 检查答案
+	 * 
+	 * @return
+	 */
+	private int checkTheAnswer() {
+		// 先检查长度
+		for (int i = 0; i < mBtnSelectWords.size(); i++) {
+			// 如果有空的，说明答案还不是很完整
+			if (mBtnSelectWords.get(i).mWordString.length() == 0) {
+				return STATUS_ANSWER_LACK;
+			}
+		}
+		// 答案完整，继续检查正确性
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < mBtnSelectWords.size(); i++) {
+			sb.append(mBtnSelectWords.get(i).mWordString);
+		}
+		return (sb.toString().equals(mCurrentSong.getSongName())) ? STATUS_ANSWER_RIGHT : STATUS_ANSWER_WRONG;
 	}
 }
